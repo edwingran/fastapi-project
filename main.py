@@ -1,6 +1,15 @@
 from fastapi import FastAPI
 from datetime import datetime
 import zoneinfo
+from pydantic import BaseModel
+
+class Customer(BaseModel):
+    name: str
+    description: str | None
+    email: str 
+    age: int
+    
+
 
 app = FastAPI()
 
@@ -39,6 +48,7 @@ async def time(iso_code: str, format: str = "24h"): # Parámetro tipo query
     }
 
 
-#Reto: crear un nuevo endpoint que reciba una variable en formato get 
-#Y que automaticamente se pueda hablitar el formato de hora. Por ejemplo devolver 
-#la hora en formato de 24 horas si el usuario lo requiere.
+@app.post("/customers")
+async def create_customer(customer_data: Customer):
+    
+    return customer_data
